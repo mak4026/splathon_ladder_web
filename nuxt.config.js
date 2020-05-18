@@ -1,5 +1,11 @@
 import colors from 'vuetify/es5/util/colors'
 
+const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
+  router: {
+    base: '/splathon_ladder_web/'
+  }
+} : {}
+
 export default {
   mode: 'spa',
   /*
@@ -79,5 +85,6 @@ export default {
         fs: "empty"
       }
     }
-  }
+  },
+  ...routerBase,
 }
