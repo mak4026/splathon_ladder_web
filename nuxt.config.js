@@ -8,6 +8,7 @@ const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
 
 export default {
   mode: 'spa',
+  ...routerBase,
   /*
   ** Headers of the page
   */
@@ -36,6 +37,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    '~/plugins/firebase',
   ],
   /*
   ** Nuxt.js dev-modules
@@ -84,7 +86,20 @@ export default {
       config.node = {
         fs: "empty"
       }
+    },
+    babel: {
+      presets({ isServer }) {
+        return [
+          [
+            require.resolve('@nuxt/babel-preset-app'),
+            // require.resolve('@nuxt/babel-preset-app-edge'), // For nuxt-edge users
+            {
+              buildTarget: isServer ? 'server' : 'client',
+              corejs: { version: 3 }
+            }
+          ]
+        ]
+      }
     }
   },
-  ...routerBase,
 }

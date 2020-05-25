@@ -108,7 +108,7 @@ export default {
         },
                 {
           icon: 'mdi-chart-bubble',
-          title: 'Ranking',
+          title: 'Ranking ',
           to: '/ranking'
         }
       ],

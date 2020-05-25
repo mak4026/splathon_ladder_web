@@ -41,7 +41,7 @@ export default {
       search: "",
       headers: [
         { text: 'Rank', value: 'Rank' },
-        { text: 'Prev Rank', value: 'Prev Rank' },
+        { text: 'Prev', value: 'Prev Rank' },
         { text: 'Division', value: 'Div' },
         { text: 'Team', value: 'Team' },
       ],
