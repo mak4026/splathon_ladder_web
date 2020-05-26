@@ -7,8 +7,16 @@ export const state = () => ({
 export const actions = {
   async getTeams({ commit }) {
     const db = firebase.firestore();
-    const res = await db.collection("tournaments/spladder4/teams").get();
-    commit('setTeams', res.docs.map(x => x.data()));
+    const res = await db.collection("tournaments/spladder4/teams").get()
+    let list = [];
+    res.forEach(teamRef => {
+      const teamData = {
+        docId: teamRef.id,
+        ...teamRef.data(),
+      };
+      list.push(teamData);
+    });
+    commit('setTeams', list);
   },
 }
 
