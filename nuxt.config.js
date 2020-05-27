@@ -100,6 +100,17 @@ export default {
           ]
         ]
       }
-    }
+    },
   },
+  generate: {
+    routes(callback) {
+      const teams = [
+        '/teams',
+        '/teams/1',
+        '/teams/4',
+        '/teams/5'
+      ]
+      callback(null, teams);
+    }
+  }
 }
