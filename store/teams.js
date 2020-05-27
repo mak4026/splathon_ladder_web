@@ -5,9 +5,9 @@ export const state = () => ({
 })
 
 export const actions = {
-  async getTeams({ commit }) {
+  async getTeams({ commit }, { season } = { season: 5 }) {
     const db = firebase.firestore();
-    const res = await db.collection("tournaments/spladder4/teams").get()
+    const res = await db.collection(`tournaments/spladder${season}/teams`).get()
     let list = [];
     res.forEach(teamRef => {
       const teamData = {

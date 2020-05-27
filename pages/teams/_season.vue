@@ -8,7 +8,7 @@
   <v-container>
       <v-card v-if="teams">
         <v-card-title>
-          チーム一覧
+          Season{{ season }} チーム一覧
           <v-spacer />
           <v-text-field
             v-model="search"
@@ -41,6 +41,7 @@ export default {
   data(){
     return {
       loading: true,
+      season: this.$route.params.season ?? 5, // TODO: state current season
       search: "",
       headers: [
         { text: 'チーム名', value: 'name' },
@@ -58,7 +59,7 @@ export default {
     }),
   },
   mounted(){
-    this.getTeams().then(() => this.loading = false);
+    this.getTeams({ season: this.season }).then(() => this.loading = false);
 
   },
   methods: {
