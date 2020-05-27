@@ -34,7 +34,6 @@
 </template>
 
 <script>
-import firebase from "firebase";
 import { mapActions, mapState } from 'vuex'
 export default {
   name: "Teams",
@@ -66,6 +65,9 @@ export default {
     ...mapActions({
       getTeams: 'teams/getTeams',
     }),
+  },
+  validate ({ params }) {
+    return params.season === undefined || /^\d+$/.test(params.season) && params.season <= 5 // TODO: state current season
   }
 }
 </script>
