@@ -8,7 +8,7 @@
   <v-container fluid>
       <v-card v-if="teams">
         <v-card-title>
-          Season{{ season }} チーム一覧
+          Season {{ season }} チーム一覧
           <v-spacer />
           <v-text-field
             v-model="search"
