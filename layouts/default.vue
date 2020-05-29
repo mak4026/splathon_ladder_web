@@ -31,7 +31,7 @@
       <v-spacer />
     </v-app-bar>
     <v-content>
-      <v-container>
+      <v-container fluid>
         <nuxt />
       </v-container>
     </v-content>
@@ -64,8 +64,13 @@ export default {
         },
         {
           icon: 'mdi-clipboard-flow',
-          title: 'Ranking',
+          title: 'ランキング',
           to: '/ranking'
+        },
+        {
+          icon: 'mdi-calendar',
+          title: '対戦一覧',
+          to: '/challenges'
         }
       ],
       title: 'Spladder Portal'
