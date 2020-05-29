@@ -4,10 +4,10 @@
     justify-center
     align-center
   >
-  <v-container>
+  <v-container fluid>
       <v-card v-if="ranking">
         <v-card-title>
-          ランキング Season {{ season }} Round {{ round }}
+          Season {{ season }} Round {{ round }} のランキング
           <v-spacer />
           <v-text-field
             v-model="search"
