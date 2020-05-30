@@ -31,7 +31,14 @@
                   <v-container>
                     <v-row>
                       <v-col cols="12">
-                        <v-text-field v-model="editedItem.Date" label="開始日時"></v-text-field>
+                        <v-datetime-picker label="開始日時" v-model="editedItem.Date">
+                          <template v-slot:dateIcon>
+                            <v-icon>mdi-calendar</v-icon>
+                          </template>
+                          <template v-slot:timeIcon>
+                            <v-icon>mdi-clock</v-icon>
+                            </template>
+                        </v-datetime-picker>
                       </v-col>
                       <v-col cols="12">
                         <v-text-field
@@ -58,6 +65,9 @@
                 </v-card-actions>
               </v-card>
             </v-dialog>
+          </template>
+          <template v-slot:item.Date="{ value }">
+            {{ value ? value.toLocaleString('ja-JP') : "" }}
           </template>
           <template v-slot:item.actions="{ item }">
             <v-icon small @click="editItem(item)">mdi-pencil</v-icon>
@@ -92,7 +102,7 @@ export default {
       round: 1,
       editedItem: {
         GameId: "",
-        Date: new Date(),
+        Date: null,
         Division: "",
         ChallengerRank: 0,
         Challenger: "",
@@ -139,7 +149,7 @@ export default {
     update() {
       const id = this.editedItem.GameId;
       const payload = {
-        Date: this.editedItem.Date || "",
+        Date: this.editedItem.Date || null,
         ChallengerScore: this.editedItem.ChallengerScore,
         DefenderScore: this.editedItem.DefenderScore
       };

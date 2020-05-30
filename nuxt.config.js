@@ -38,6 +38,7 @@ export default {
   */
   plugins: [
     '~/plugins/firebase',
+    '~/plugins/datetime-picker'
   ],
   /*
   ** Nuxt.js dev-modules
