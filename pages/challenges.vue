@@ -150,8 +150,8 @@ export default {
       const id = this.editedItem.GameId;
       const payload = {
         Date: this.editedItem.Date || null,
-        ChallengerScore: this.editedItem.ChallengerScore,
-        DefenderScore: this.editedItem.DefenderScore
+        ChallengerScore: parseInt(this.editedItem.ChallengerScore),
+        DefenderScore: parseInt(this.editedItem.DefenderScore)
       };
       this.updateChallenge({
         id: id,
