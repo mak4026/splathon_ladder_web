@@ -4,7 +4,7 @@
     justify-center
     align-center
   >
-  <v-container fluid>
+  <v-container>
       <v-card v-if="ranking">
         <v-card-title>
           Season {{ season }} Round {{ round }} のランキング

@@ -5,7 +5,7 @@
     justify-center
     align-center
   >
-  <v-container fluid>
+  <v-container>
       <v-card v-if="teams">
         <v-card-title>
           Season {{ season }} チーム一覧

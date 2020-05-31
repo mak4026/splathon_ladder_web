@@ -1,6 +1,6 @@
 <template>
   <v-layout column justify-center align-center>
-    <v-container fluid>
+    <v-container>
       <v-card>
         <v-img
           src="./ladder-banner.png"

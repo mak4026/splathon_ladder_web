@@ -1,6 +1,6 @@
 <template>
   <v-layout column justify-center align-center>
-    <v-container fluid>
+    <v-container>
       <v-card v-if="challenges">
         <v-card-title>
           Season {{ season }} Round {{ round }} の対戦一覧
