@@ -67,6 +67,7 @@
             </v-dialog>
           </template>
           <template v-slot:item.Date="{ value }">{{ value ? value.toLocaleString('ja-JP') : "" }}</template>
+          <template v-slot:item.Division="{ value }">{{ getDivisionStr(value) }}</template>
           <template v-slot:item.actions="{ item }">
             <v-icon small @click="copyTitle(item)">mdi-content-copy</v-icon>
             <v-icon small @click="editItem(item)">mdi-pencil</v-icon>
@@ -145,6 +146,24 @@ export default {
       const aCode = reg.exec(a)[1];
       const bCode = reg.exec(b)[1];
       return aCode - bCode;
+    },
+    getDivisionStr(divId){
+      const divArray = [
+        "X",
+        "S+ Upper",
+        "S+ Lower",
+        "S Upper",
+        "S Middle",
+        "S Lower",
+        "A+ Upper",
+        "A+ Middle",
+        "A+ Lower",
+        "A Upper",
+        "A Middle",
+        "A Lower",
+        "B+"
+      ];
+      return divArray[divId] || "???";
     },
     editItem(item) {
       this.editedItem = Object.assign({}, item);
