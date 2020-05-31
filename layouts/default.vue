@@ -88,4 +88,8 @@ a.copyright {
     text-decoration-line: underline;
   }
 }
+a.header-title {
+  text-decoration: none;
+  color: inherit;
+}
 </style>
