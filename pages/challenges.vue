@@ -70,9 +70,20 @@
             {{ value ? value.toLocaleString('ja-JP') : "" }}
           </template>
           <template v-slot:item.actions="{ item }">
+            <v-icon small @click="copyTitle(item)">mdi-content-copy</v-icon>
             <v-icon small @click="editItem(item)">mdi-pencil</v-icon>
           </template>
         </v-data-table>
+        <v-snackbar
+          v-model="snackbar"
+          bottom=true
+          timeout=3000
+        >
+        <span>
+          <v-icon>mdi-checkbox-marked-circle-outline</v-icon>
+          配信タイトルをコピーしました
+        </span>
+        </v-snackbar>
       </v-card>
     </v-container>
   </v-layout>
@@ -85,6 +96,7 @@ export default {
     return {
       loading: true,
       dialog: false,
+      snackbar: false,
       search: "",
       headers: [
         { text: "試合コード", value: "GameId", sort: this.gameIdSort },
@@ -123,7 +135,7 @@ export default {
     ...mapGetters("challenges", ["getChallengesByRound"]),
     getStreamTitle: function() {
       const challenge = this.editedItem;
-      return `[${challenge.GameId}] ${challenge.Challenger} vs ${challenge.Defender}`;
+      return this.createTitle(challenge);
     }
   },
   mounted() {
@@ -146,6 +158,15 @@ export default {
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
+    createTitle(item){
+      return `[${item.GameId}] ${item.ChallengerRank}位 ${item.Challenger} vs ${item.DefenderRank}位 ${item.Defender} [Splatoon2]`;
+    },
+    copyTitle(item){
+      const str = this.createTitle(item);
+      if(navigator.clipboard){
+        navigator.clipboard.writeText(str).then(() => this.snackbar = true);
+      }
+    },
     update() {
       const id = this.editedItem.GameId;
       const payload = {
@@ -162,7 +183,7 @@ export default {
     },
     close() {
       this.dialog = false;
-    }
+    },
   }
 };
 </script>
