@@ -166,9 +166,3 @@ export default {
   }
 };
 </script>
-
-<style>
-.ranking-table th {
-  white-space: nowrap;
-}
-</style>
