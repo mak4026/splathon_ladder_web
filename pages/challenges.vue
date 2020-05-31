@@ -108,7 +108,7 @@ export default {
         { text: "防衛者順位", value: "DefenderRank" },
         { text: "防衛チーム", value: "Defender" },
         { text: "防衛者スコア", value: "DefenderScore" },
-        { text: "編集", value: "actions" }
+        { text: "", value: "actions" }
       ],
       season: 5,
       round: 1,
