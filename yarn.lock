@@ -8699,11 +8699,6 @@ resolve@1.x, resolve@^1.1.7, resolve@^1.10.0, resolve@^1.15.1, resolve@^1.2.0, r
   dependencies:
     path-parse "^1.0.6"
 
-ress@^2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/ress/-/ress-2.0.4.tgz#ec80a066f1e0107353143405ad8c1cc4a48b195e"
-  integrity sha512-Fn9ugfCVPYn+8haQnen0rfm3gaX92Wk3SRpCNvrrpVvW6Iu1IKPU+UjsmVS8hYgweCBEr0x3nJd+TM+PXVaCoQ==
-
 ret@~0.1.10:
   version "0.1.15"
   resolved "https://registry.yarnpkg.com/ret/-/ret-0.1.15.tgz#b8a4825d5bdb1fc3f6f53c2bc33f81388681c7bc"
