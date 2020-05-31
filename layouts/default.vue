@@ -40,7 +40,10 @@
       :fixed="fixed"
       app
     >
-      <span>&copy; {{ new Date().getFullYear() }}</span>
+      <span>&copy; {{ new Date().getFullYear() }}
+        <a class="copyright white--text" href="https://twitter.com/splathon" target="_blank">Splathon</a>
+         / Developed by
+        <a class="copyright white--text" href="https://mak4026.github.io/" target="_blank">maktopia</a></span>
     </v-footer>
   </v-app>
 </template>
@@ -78,3 +81,11 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+a.copyright {
+  text-decoration: none;
+  &:hover{
+    text-decoration-line: underline;
+  }
+}
+</style>
