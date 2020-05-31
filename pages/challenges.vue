@@ -37,7 +37,7 @@
                           </template>
                           <template v-slot:timeIcon>
                             <v-icon>mdi-clock</v-icon>
-                            </template>
+                          </template>
                         </v-datetime-picker>
                       </v-col>
                       <v-col cols="12">
@@ -66,23 +66,15 @@
               </v-card>
             </v-dialog>
           </template>
-          <template v-slot:item.Date="{ value }">
-            {{ value ? value.toLocaleString('ja-JP') : "" }}
-          </template>
+          <template v-slot:item.Date="{ value }">{{ value ? value.toLocaleString('ja-JP') : "" }}</template>
           <template v-slot:item.actions="{ item }">
             <v-icon small @click="copyTitle(item)">mdi-content-copy</v-icon>
             <v-icon small @click="editItem(item)">mdi-pencil</v-icon>
           </template>
         </v-data-table>
-        <v-snackbar
-          v-model="snackbar"
-          bottom=true
-          timeout=3000
-        >
-        <span>
+        <v-snackbar v-model="snackbar" bottom="true" timeout="3000">
+          <span>配信タイトルをコピーしました</span>
           <v-icon>mdi-checkbox-marked-circle-outline</v-icon>
-          配信タイトルをコピーしました
-        </span>
         </v-snackbar>
       </v-card>
     </v-container>
@@ -146,7 +138,7 @@ export default {
   methods: {
     ...mapActions({
       getChallenges: "challenges/getChallenges",
-      updateChallenge: "challenges/updateChallenge",
+      updateChallenge: "challenges/updateChallenge"
     }),
     gameIdSort: (a, b) => {
       const reg = /^.*\d+-(\d+).*$/;
@@ -158,13 +150,13 @@ export default {
       this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
-    createTitle(item){
+    createTitle(item) {
       return `[${item.GameId}] ${item.ChallengerRank}位 ${item.Challenger} vs ${item.DefenderRank}位 ${item.Defender} [Splatoon2]`;
     },
-    copyTitle(item){
+    copyTitle(item) {
       const str = this.createTitle(item);
-      if(navigator.clipboard){
-        navigator.clipboard.writeText(str).then(() => this.snackbar = true);
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(str).then(() => (this.snackbar = true));
       }
     },
     update() {
@@ -183,7 +175,7 @@ export default {
     },
     close() {
       this.dialog = false;
-    },
+    }
   }
 };
 </script>
