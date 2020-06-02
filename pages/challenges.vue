@@ -73,7 +73,7 @@
             <v-icon small @click="editItem(item)">mdi-pencil</v-icon>
           </template>
         </v-data-table>
-        <v-snackbar v-model="snackbar" bottom="true" timeout="3000">
+        <v-snackbar v-model="snackbar" :bottom="true" :timeout="3000">
           <span>配信タイトルをコピーしました</span>
           <v-icon>mdi-checkbox-marked-circle-outline</v-icon>
         </v-snackbar>
