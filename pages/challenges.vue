@@ -93,7 +93,7 @@ export default {
       search: "",
       headers: [
         { text: "試合コード", value: "GameId", sort: this.gameIdSort },
-        { text: "開始日時", value: "Date" },
+        { text: "開始日時", value: "Date", sort: this.dateSort },
         { text: "ディビジョン", value: "Division" },
         { text: "挑戦者順位", value: "ChallengerRank" },
         { text: "挑戦チーム", value: "Challenger" },
@@ -146,6 +146,11 @@ export default {
       const aCode = reg.exec(a)[1];
       const bCode = reg.exec(b)[1];
       return aCode - bCode;
+    },
+    dateSort: (a, b) => {
+      if(a === null) return 1;
+      if(b === null) return -1;
+      return a.getTime() - b.getTime();
     },
     getDivisionStr(divId){
       const divArray = [

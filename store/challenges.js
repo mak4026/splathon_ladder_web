@@ -14,14 +14,16 @@ export const actions = {
         GameId: challengeRef.id,
         ...challengeRef.data()
       }
-      if(data.Date instanceof firebase.firestore.Timestamp){
+      if (data.Date instanceof firebase.firestore.Timestamp) {
         data.Date = data.Date.toDate();
+      } else {
+        data.Date = null;
       }
       list.push(data);
     });
     commit('setChallenges', list);
   },
-  async updateChallenge({ commit }, { id, challenge, season }){
+  async updateChallenge({ commit }, { id, challenge, season }) {
     const db = firebase.firestore();
     const challengeRef = db.collection(`tournaments/spladder${season}/challenges`).doc(id);
     await challengeRef.update({
