@@ -3,13 +3,13 @@
     <v-container>
       <v-card v-if="challenges">
         <v-card-title>
-          Season {{ season }} Round {{ round }} の対戦一覧
+          Season {{ this.tournament.season }} Round {{ this.tournament.round }} の対戦一覧
           <v-spacer />
           <v-text-field v-model="search" append-icon="mdi-magnify" label="検索" sigle-line />
         </v-card-title>
         <v-data-table
           :headers="headers"
-          :items="getChallengesByRound(round)"
+          :items="getChallengesByRound(this.tournament.round)"
           :search="search"
           :loading="loading"
           :disable-pagination="true"
@@ -126,8 +126,6 @@ export default {
         { text: "配信", value: "StreamURL", sortable: false },
         { text: "", value: "actions" }
       ],
-      season: 5,
-      round: 1,
       editedItem: {
         GameId: "",
         Date: null,
@@ -148,7 +146,8 @@ export default {
   },
   computed: {
     ...mapState({
-      challenges: state => state.challenges.challenges
+      challenges: state => state.challenges.challenges,
+      tournament: state => state.tournament,
     }),
     ...mapGetters("challenges", ["getChallengesByRound"]),
     getStreamTitle: function() {
@@ -156,15 +155,18 @@ export default {
       return this.createTitle(challenge);
     }
   },
+  async fetch({ store }) {
+    await store.dispatch("tournament/getLatestTournament");
+  },
   mounted() {
-    this.getChallenges({ season: this.season }).then(
+    this.getChallenges({ season: this.tournament.season }).then(
       () => (this.loading = false)
     );
   },
   methods: {
     ...mapActions({
       getChallenges: "challenges/getChallenges",
-      updateChallenge: "challenges/updateChallenge"
+      updateChallenge: "challenges/updateChallenge",
     }),
     gameIdSort: (a, b) => {
       const reg = /^.*\d+-(\d+).*$/;
@@ -200,7 +202,7 @@ export default {
       this.dialog = true;
     },
     createTitle(item) {
-      return `[${item.GameId}] ${item.ChallengerRank}位 ${item.Challenger} vs ${item.DefenderRank}位 ${item.Defender} [Splatoon2]`;
+      return `${this.tournament.hashtag} [${item.GameId}] Div ${this.getDivisionStr(item.Division)}: ${item.ChallengerRank}位 ${item.Challenger} vs ${item.DefenderRank}位 ${item.Defender} [Splatoon2]`;
     },
     copyTitle(item) {
       const str = this.createTitle(item);
@@ -219,7 +221,7 @@ export default {
       };
       this.updateChallenge({
         id: id,
-        season: this.season,
+        season: this.tournament.season,
         challenge: payload
       });
       this.dialog = false;
