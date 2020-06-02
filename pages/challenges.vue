@@ -54,6 +54,18 @@
                           :rules="[rules.score]"
                         ></v-text-field>
                       </v-col>
+                      <v-col cols="12">
+                        <v-text-field
+                          v-model="editedItem.Streamer"
+                          label="配信者"
+                        ></v-text-field>
+                      </v-col>
+                      <v-col cols="12">
+                        <v-text-field
+                          v-model="editedItem.StreamURL"
+                          label="配信URL"
+                        ></v-text-field>
+                      </v-col>
                     </v-row>
                   </v-container>
                 </v-card-text>
@@ -68,6 +80,16 @@
           </template>
           <template v-slot:item.Date="{ value }">{{ value ? value.toLocaleString('ja-JP') : "" }}</template>
           <template v-slot:item.Division="{ value }">{{ getDivisionStr(value) }}</template>
+          <template v-slot:item.StreamURL="{ item }">
+            <v-tooltip top v-if="item.Streamer && item.StreamURL">
+              <template v-slot:activator="{ on }">
+                <v-btn icon :href="item.StreamURL" v-on="on">
+                  <v-icon>mdi-youtube</v-icon>
+                </v-btn>
+              </template>
+              <span>配信者: {{ item.Streamer }}</span>
+            </v-tooltip>
+          </template>
           <template v-slot:item.actions="{ item }">
             <v-icon small @click="copyTitle(item)">mdi-content-copy</v-icon>
             <v-icon small @click="editItem(item)">mdi-pencil</v-icon>
@@ -101,6 +123,7 @@ export default {
         { text: "防衛者順位", value: "DefenderRank" },
         { text: "防衛チーム", value: "Defender" },
         { text: "防衛者スコア", value: "DefenderScore" },
+        { text: "配信", value: "StreamURL", sortable: false },
         { text: "", value: "actions" }
       ],
       season: 5,
@@ -114,7 +137,9 @@ export default {
         ChallengerScore: 0,
         DefenderRank: 0,
         Defender: "",
-        DefenderScore: 0
+        DefenderScore: 0,
+        Streamer: "",
+        StreamURL: "",
       },
       rules: {
         score: x => (0 <= x && x <= 4) || "0から4の整数を入力してください"
@@ -188,7 +213,9 @@ export default {
       const payload = {
         Date: this.editedItem.Date || null,
         ChallengerScore: parseInt(this.editedItem.ChallengerScore),
-        DefenderScore: parseInt(this.editedItem.DefenderScore)
+        DefenderScore: parseInt(this.editedItem.DefenderScore),
+        Streamer: this.editedItem.Streamer,
+        StreamURL: this.editedItem.StreamURL,
       };
       this.updateChallenge({
         id: id,
