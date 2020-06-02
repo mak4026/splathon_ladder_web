@@ -64,6 +64,7 @@
                         <v-text-field
                           v-model="editedItem.StreamURL"
                           label="配信URL"
+                          :rules="[rules.url]"
                         ></v-text-field>
                       </v-col>
                     </v-row>
@@ -140,7 +141,12 @@ export default {
         StreamURL: "",
       },
       rules: {
-        score: x => (0 <= x && x <= 4) || "0から4の整数を入力してください"
+        score: x => (0 <= x && x <= 4) || "0から4の整数を入力してください",
+        url: s => {
+          if(!s) return true; // s is empty
+          const reg = /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/;
+          return reg.test(s) || "URLの形式で入力してください"
+        },
       }
     };
   },
