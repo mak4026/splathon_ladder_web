@@ -11,6 +11,7 @@ export const state = () => ({
 export const actions = {
   async getLatestTournament({ commit }){
     const db = firebase.firestore();
+    // TODO: hard coding latest tournament
     const res = await db.doc(`tournaments/spladder5`).get();
     commit('setTournament', res.data());
   },
