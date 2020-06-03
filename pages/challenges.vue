@@ -222,8 +222,8 @@ export default {
         Date: this.editedItem.Date || null,
         ChallengerScore: parseInt(this.editedItem.ChallengerScore),
         DefenderScore: parseInt(this.editedItem.DefenderScore),
-        Streamer: this.editedItem.Streamer,
-        StreamURL: this.editedItem.StreamURL,
+        Streamer: this.editedItem.Streamer || "",
+        StreamURL: this.editedItem.StreamURL || "",
       };
       this.updateChallenge({
         id: id,
