@@ -164,10 +164,9 @@ export default {
   async fetch({ store }) {
     await store.dispatch("tournament/getLatestTournament");
   },
-  mounted() {
-    this.getChallenges({ season: this.tournament.season }).then(
-      () => (this.loading = false)
-    );
+  async mounted() {
+    await this.getChallenges({ season: this.tournament.season });
+    this.loading = false;
   },
   methods: {
     ...mapActions({

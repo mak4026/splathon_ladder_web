@@ -52,8 +52,9 @@ export default {
       ranking: state => state.ranking.ranking,
     }),
   },
-  mounted () {
-    this.getRanking({season : this.season}).then(() => this.loading = false );
+  async mounted () {
+    await this.getRanking({season : this.season});
+    this.loading = false;
   },
   methods: {
     ...mapActions({
