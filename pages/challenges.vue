@@ -84,7 +84,7 @@
           <template v-slot:item.StreamURL="{ item }">
             <v-tooltip top v-if="item.Streamer && item.StreamURL">
               <template v-slot:activator="{ on }">
-                <v-btn icon :href="item.StreamURL" v-on="on">
+                <v-btn icon :href="item.StreamURL" target="_blank" v-on="on">
                   <v-icon>mdi-youtube</v-icon>
                 </v-btn>
               </template>
