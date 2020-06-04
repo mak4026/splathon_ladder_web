@@ -215,7 +215,7 @@ export default {
         navigator.clipboard.writeText(str).then(() => (this.snackbar = true));
       }
     },
-    update() {
+    async update() {
       const id = this.editedItem.GameId;
       const payload = {
         Date: this.editedItem.Date || null,
@@ -224,7 +224,7 @@ export default {
         Streamer: this.editedItem.Streamer || "",
         StreamURL: this.editedItem.StreamURL || "",
       };
-      this.updateChallenge({
+      await this.updateChallenge({
         id: id,
         season: this.tournament.season,
         challenge: payload
