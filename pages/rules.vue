@@ -8,7 +8,14 @@
         <v-tabs-items v-model="tab">
           <v-tab-item v-for="rule in rules" :key="rule.round">
             <v-card flat>
-              <v-card-text>{{ rule }}</v-card-text>
+              <v-data-table
+                :items="settingWithIndex(rule.settings)"
+                :headers="headers"
+                :loading="loading"
+                disable-sort
+                disable-pagination
+                hide-default-footer
+              ></v-data-table>
             </v-card>
           </v-tab-item>
         </v-tabs-items>
@@ -23,6 +30,11 @@ export default {
     return {
       tab: null,
       loading: true,
+      headers: [
+        { text: "", value: "index" },
+        { text: "ルール", value: "rule" },
+        { text: "ステージ", value: "stage" }
+      ],
       season: 5
     };
   },
@@ -31,16 +43,23 @@ export default {
       rules: state => state.rules.rules
     })
   },
-  async fetch({ store }){
-    await store.dispatch("rules/getRules");
-  },
   mounted() {
-    this.tab = this.rules.length - 1;
+    this.getRules({season: 5}).then(() => {
+      this.loading = false;
+      this.tab = this.rules.length - 1;
+    })
+
   },
   methods: {
     ...mapActions({
       getRules: "rules/getRules"
-    })
+    }),
+    settingWithIndex(settings) {
+      return settings.map((items, index) => ({
+        ...items,
+        index: index + 1
+      }));
+    }
   }
 };
 </script>
