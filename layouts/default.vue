@@ -66,6 +66,11 @@ export default {
           to: '/teams',
         },
         {
+          icon: 'mdi-map-marker',
+          title: 'ルール＆ステージ',
+          to: '/rules',
+        },
+        {
           icon: 'mdi-clipboard-flow',
           title: 'ランキング',
           to: '/ranking'
