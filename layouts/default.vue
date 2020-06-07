@@ -36,6 +36,8 @@
       </v-container>
     </v-content>
 
+    <error-snackbar />
+
     <v-footer
       :fixed="fixed"
       app
@@ -49,7 +51,12 @@
 </template>
 
 <script>
+import ErrorSnackbar from "../components/ErrorSnackBar"
+
 export default {
+  components: {
+    ErrorSnackbar
+  },
   data () {
     return {
       drawer: false,

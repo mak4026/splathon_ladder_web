@@ -37,8 +37,9 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    '~/plugins/reactive-error-handler',
     '~/plugins/firebase',
-    '~/plugins/datetime-picker'
+    '~/plugins/datetime-picker',
   ],
   /*
   ** Nuxt.js dev-modules

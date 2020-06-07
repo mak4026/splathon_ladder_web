@@ -164,10 +164,9 @@ export default {
   async fetch({ store }) {
     await store.dispatch("tournament/getLatestTournament");
   },
-  mounted() {
-    this.getChallenges({ season: this.tournament.season }).then(
-      () => (this.loading = false)
-    );
+  async mounted() {
+    await this.getChallenges({ season: this.tournament.season });
+    this.loading = false;
   },
   methods: {
     ...mapActions({
@@ -216,7 +215,7 @@ export default {
         navigator.clipboard.writeText(str).then(() => (this.snackbar = true));
       }
     },
-    update() {
+    async update() {
       const id = this.editedItem.GameId;
       const payload = {
         Date: this.editedItem.Date || null,
@@ -225,7 +224,7 @@ export default {
         Streamer: this.editedItem.Streamer || "",
         StreamURL: this.editedItem.StreamURL || "",
       };
-      this.updateChallenge({
+      await this.updateChallenge({
         id: id,
         season: this.tournament.season,
         challenge: payload
