@@ -17,7 +17,7 @@
           />
         </v-card-title>
         <v-tabs
-          v-model="tab"
+          v-model="activeTab"
           grow
         >
           <v-tab
@@ -27,7 +27,7 @@
             Round {{ round }}
           </v-tab>
         </v-tabs>
-        <v-tabs-items v-model="tab">
+        <v-tabs-items v-model="activeTab">
           <v-tab-item
             v-for="round in rounds"
             :key="round"
@@ -55,7 +55,7 @@ import { mapActions, mapState } from 'vuex'
 export default {
   data() {
     return {
-      tab: null,
+      activeTab: 0,
       loading: true,
       search: "",
       headers: [
@@ -68,14 +68,15 @@ export default {
   computed: {
     ...mapState({
       ranking: state => state.ranking.ranking,
+      tournament: state => state.tournament
     }),
     rounds() {
-      console.log(Object.keys(JSON.parse(JSON.stringify(this.ranking))).length)
-      return Object.keys(JSON.parse(JSON.stringify(this.ranking))).length
-    }
+      return this.tournament.round
+    },
   },
   async mounted () {
     await this.getRanking({season : this.season});
+    this.activeTab = this.tournament.round - 1
     this.loading = false;
   },
   methods: {
