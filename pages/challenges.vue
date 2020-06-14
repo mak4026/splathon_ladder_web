@@ -3,99 +3,119 @@
     <v-container>
       <v-card v-if="challenges">
         <v-card-title>
-          Season {{ this.tournament.season }} Round {{ this.tournament.round }} の対戦一覧
+          Season {{ this.tournament.season }} の対戦一覧
           <v-spacer />
           <v-text-field v-model="search" append-icon="mdi-magnify" label="検索" sigle-line />
         </v-card-title>
-        <v-data-table
-          :headers="headers"
-          :items="getChallengesByRound(this.tournament.round)"
-          :search="search"
-          :loading="loading"
-          :disable-pagination="true"
-          :hide-default-footer="true"
-          sort-by="ChallengerRank"
-          class="elevation-1 ranking-table"
+        <v-tabs
+          v-model="activeRound"
+          grow
         >
-          <template v-slot:top>
-            <v-dialog v-model="dialog" max-width="600px">
-              <v-card>
-                <v-card-title>
-                  <span class="headline">対戦データの編集</span>
-                </v-card-title>
-                <v-card-subtitle>
-                  <span>{{ getStreamTitle }}</span>
-                </v-card-subtitle>
+          <v-tab
+            v-for="round in rounds"
+            :key="round"
+          >
+            Round {{ round }}
+          </v-tab>
+        </v-tabs>
+        <v-tabs-items v-model="activeRound">
+          <v-tab-item
+            v-for="round in rounds"
+            :key="round"
+          >
+            <v-data-table
+              :headers="headers"
+              :items="getChallengesByRound(round)"
+              :search="search"
+              :loading="loading"
+              :disable-pagination="true"
+              :hide-default-footer="true"
+              sort-by="ChallengerRank"
+              class="elevation-1 ranking-table"
+            >
+              <template v-slot:top>
+                <v-dialog v-model="dialog" max-width="600px">
+                  <v-card>
+                    <v-card-title>
+                      <span class="headline">対戦データの編集</span>
+                    </v-card-title>
+                    <v-card-subtitle>
+                      <span>{{ getStreamTitle }}</span>
+                    </v-card-subtitle>
 
-                <v-card-text>
-                  <v-container>
-                    <v-row>
-                      <v-col cols="12">
-                        <v-datetime-picker label="開始日時" v-model="editedItem.Date">
-                          <template v-slot:dateIcon>
-                            <v-icon>mdi-calendar</v-icon>
-                          </template>
-                          <template v-slot:timeIcon>
-                            <v-icon>mdi-clock</v-icon>
-                          </template>
-                        </v-datetime-picker>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-text-field
-                          v-model="editedItem.ChallengerScore"
-                          :label="'挑戦者スコア（'+editedItem.Challenger+'）'"
-                          :rules="[rules.score]"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-text-field
-                          v-model="editedItem.DefenderScore"
-                          :label="'防衛者スコア（'+editedItem.Defender+'）'"
-                          :rules="[rules.score]"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-text-field
-                          v-model="editedItem.Streamer"
-                          label="配信者"
-                        ></v-text-field>
-                      </v-col>
-                      <v-col cols="12">
-                        <v-text-field
-                          v-model="editedItem.StreamURL"
-                          label="配信URL"
-                          :rules="[rules.url]"
-                        ></v-text-field>
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                </v-card-text>
+                    <v-card-text>
+                      <v-container>
+                        <v-row>
+                          <v-col cols="12">
+                            <v-datetime-picker label="開始日時" v-model="editedItem.Date">
+                              <template v-slot:dateIcon>
+                                <v-icon>mdi-calendar</v-icon>
+                              </template>
+                              <template v-slot:timeIcon>
+                                <v-icon>mdi-clock</v-icon>
+                              </template>
+                            </v-datetime-picker>
+                          </v-col>
+                          <v-col cols="12">
+                            <v-text-field
+                              v-model="editedItem.ChallengerScore"
+                              :label="'挑戦者スコア（'+editedItem.Challenger+'）'"
+                              :rules="[rules.score]"
+                            ></v-text-field>
+                          </v-col>
+                          <v-col cols="12">
+                            <v-text-field
+                              v-model="editedItem.DefenderScore"
+                              :label="'防衛者スコア（'+editedItem.Defender+'）'"
+                              :rules="[rules.score]"
+                            ></v-text-field>
+                          </v-col>
+                          <v-col cols="12">
+                            <v-text-field
+                              v-model="editedItem.Streamer"
+                              label="配信者"
+                            ></v-text-field>
+                          </v-col>
+                          <v-col cols="12">
+                            <v-text-field
+                              v-model="editedItem.StreamURL"
+                              label="配信URL"
+                              :rules="[rules.url]"
+                            ></v-text-field>
+                          </v-col>
+                        </v-row>
+                      </v-container>
+                    </v-card-text>
 
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn color="blue darken-1" text @click="close">キャンセル</v-btn>
-                  <v-btn class="primary" color="darken-1" text @click="update">更新</v-btn>
-                </v-card-actions>
-              </v-card>
-            </v-dialog>
-          </template>
-          <template v-slot:item.Date="{ value }">{{ value ? value.toLocaleString('ja-JP') : "" }}</template>
-          <template v-slot:item.Division="{ value }">{{ getDivisionStr(value) }}</template>
-          <template v-slot:item.StreamURL="{ item }">
-            <v-tooltip top v-if="item.Streamer && item.StreamURL">
-              <template v-slot:activator="{ on }">
-                <v-btn icon :href="item.StreamURL" target="_blank" v-on="on">
-                  <v-icon>mdi-youtube</v-icon>
-                </v-btn>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn color="blue darken-1" text @click="close">キャンセル</v-btn>
+                      <v-btn class="primary" color="darken-1" text @click="update">更新</v-btn>
+                    </v-card-actions>
+                  </v-card>
+                </v-dialog>
               </template>
-              <span>配信者: {{ item.Streamer }}</span>
-            </v-tooltip>
-          </template>
-          <template v-slot:item.actions="{ item }">
-            <v-icon small @click="copyTitle(item)">mdi-content-copy</v-icon>
-            <v-icon small @click="editItem(item)">mdi-pencil</v-icon>
-          </template>
-        </v-data-table>
+              <template v-slot:item.Date="{ value }">{{ value ? value.toLocaleString('ja-JP') : "" }}</template>
+              <template v-slot:item.Division="{ value }">{{ getDivisionStr(value) }}</template>
+              <template v-slot:item.StreamURL="{ item }">
+                <v-tooltip top v-if="item.Streamer && item.StreamURL">
+                  <template v-slot:activator="{ on }">
+                    <v-btn icon :href="item.StreamURL" target="_blank" v-on="on">
+                      <v-icon>mdi-youtube</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>配信者: {{ item.Streamer }}</span>
+                </v-tooltip>
+              </template>
+              <template v-slot:item.actions="{ item }">
+                <v-icon small @click="copyTitle(item)">mdi-content-copy</v-icon>
+                <v-icon small @click="editItem(item)">mdi-pencil</v-icon>
+              </template>
+            </v-data-table>
+          </v-tab-item>
+        </v-tabs-items>
+
+
         <v-snackbar v-model="snackbar" :bottom="true" :timeout="3000">
           <span>配信タイトルをコピーしました</span>
           <v-icon>mdi-checkbox-marked-circle-outline</v-icon>
@@ -107,9 +127,11 @@
 
 <script>
 import { mapActions, mapState, mapGetters } from "vuex";
+
 export default {
   data() {
     return {
+      activeRound: 0,
       loading: true,
       dialog: false,
       snackbar: false,
@@ -159,13 +181,17 @@ export default {
     getStreamTitle: function() {
       const challenge = this.editedItem;
       return this.createTitle(challenge);
-    }
+    },
+    rounds() {
+      return this.tournament.round
+    },
   },
   async fetch({ store }) {
     await store.dispatch("tournament/getLatestTournament");
   },
   async mounted() {
     await this.getChallenges({ season: this.tournament.season });
+    this.activeRound = this.rounds - 1
     this.loading = false;
   },
   methods: {
