@@ -224,6 +224,9 @@ export default {
         "A Upper",
         "A Middle",
         "A Lower",
+        "A- Upper",
+        "A- Middle",
+        "A- Lower",
         "B+"
       ];
       return divArray[divId] || "???";
