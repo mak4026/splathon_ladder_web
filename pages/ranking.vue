@@ -75,13 +75,17 @@ export default {
     },
   },
   async mounted () {
-    await this.getRanking({season : this.season});
+    await Promise.all([
+      this.getTournament(),
+      this.getRanking({season : this.season})
+    ]);
     this.activeRound = this.rounds - 1
     this.loading = false;
   },
   methods: {
     ...mapActions({
       getRanking: 'ranking/getRanking',
+      getTournament: 'tournament/getLatestTournament',
     }),
   },
 }
