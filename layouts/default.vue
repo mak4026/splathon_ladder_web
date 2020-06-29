@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import ErrorSnackbar from "../components/ErrorSnackBar.vue"
+import ErrorSnackbar from "../components/ErrorSnackBar"
 
 export default {
   components: {
