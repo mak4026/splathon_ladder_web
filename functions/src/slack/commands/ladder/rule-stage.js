@@ -1,5 +1,4 @@
-const admin = require('firebase-admin');
-admin.initializeApp();
+const admin = require ('../../init');
 
 const useLadderStageCommand = (app) => {
   app.command('/ladder-stage', async ({ack, say }) => {

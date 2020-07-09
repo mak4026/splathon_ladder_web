@@ -1,6 +1,6 @@
 const functions = require('firebase-functions');
 const { App, ExpressReceiver } = require ('@slack/bolt');
-// const useHelloMessage = require ('./messages/hello'); // demo
+const useBattleThreadMessage = require ('./messages/ladder/battle-thread');
 const useLadderStageCommand = require ('./commands/ladder/rule-stage');
 
 const config = functions.config();
@@ -27,7 +27,7 @@ app.error(console.log);
 //   console.log('⚡️ Bolt app is running!');
 // })();
 
-// useHelloMessage(app); // demo
+useBattleThreadMessage(app);
 useLadderStageCommand(app);
 
 module.exports = expressReceiver;
