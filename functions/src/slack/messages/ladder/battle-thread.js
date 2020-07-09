@@ -1,7 +1,7 @@
 const admin = require ('../../init');
 
 const useBattleThreadMessage = (app) => {
-  app.message('対戦スレ', async ({ message, ack, say }) => {
+  app.message('対戦スレ', async ({ message, say }) => {
     const channelId = 'CBK6A95UJ';
     if　(message.channel == channelId) {
       const season = 5;
@@ -42,7 +42,6 @@ const useBattleThreadMessage = (app) => {
 
       await say(response);
     };
-    await ack();
   });
 };
 
