@@ -19,7 +19,7 @@
     "@nuxtjs/dotenv": "^1.4.1",
     "firebase": "^7.14.5",
     "nuxt": "^2.12.2",
-    "pug": "^3.0.0",
+    "pug": "^3.0.1",
     "pug-loader": "^2.4.0",
     "pug-plain-loader": "^1.0.0",
     "stylus": "^0.54.7",
